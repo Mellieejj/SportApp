@@ -2,12 +2,9 @@ package nl.traineeship.SportApp.endpoints;
 
 import nl.traineeship.SportApp.controller.SpelerService;
 import nl.traineeship.SportApp.domein.Speler;
-import nl.traineeship.SportApp.exceptions.SpelerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLOutput;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/spelers")
@@ -34,7 +31,8 @@ public class SpelerEndPoints {
         System.out.println("zoek speler");
         return sps.vindSpeler(id);
     }
-//    @CrossOrigin
+
+    //    @CrossOrigin
 //    @GetMapping("/zoekspeler/{naam}")
 //    public Speler vindSpeler(@PathVariable String naam) {
 //        System.out.println("Zoek speler met naam: " + naam);
@@ -42,15 +40,15 @@ public class SpelerEndPoints {
 //    }
     @CrossOrigin
     @GetMapping("/zoekspeler")
-    public Speler vindSpeler(@RequestParam(name="speler") String naam) {
+    public Speler vindSpeler(@RequestParam(name = "speler") String naam) {
         System.out.println("Zoek speler met naam: " + naam);
         return sps.zoekSpeler(naam);
     }
 
     @CrossOrigin
     @DeleteMapping("/{id}")
-    public void deleteSpeler(@PathVariable long id){
-        System.out.println("endpoint delete");
+    public void deleteSpeler(@PathVariable long id) {
+        System.out.println("Delete Speler met id: " + id);
         sps.deleteSpeler(id);
     }
 }

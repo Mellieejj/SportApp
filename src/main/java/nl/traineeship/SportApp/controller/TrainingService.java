@@ -9,7 +9,15 @@ public class TrainingService {
     @Autowired
     TrainingRepository trainingRepo;
 
-    public Iterable<Training> alleTrainingen(){
+    public Iterable<Training> alleTrainingen() {
         return trainingRepo.findAll();
+    }
+
+    public Training vindTraining(long id) {
+        return trainingRepo.findById(id).get();
+    }
+
+    public void addTraining(Training training){
+        trainingRepo.save(training);
     }
 }

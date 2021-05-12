@@ -30,7 +30,5 @@ public class SpelerService {
         Speler speler = spelerRepo.findById(id).get();
         System.out.println("delete: " + speler);
         spelerRepo.delete(speler);
-
-
     }
 }

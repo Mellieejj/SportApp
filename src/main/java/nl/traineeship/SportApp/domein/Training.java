@@ -12,7 +12,7 @@ public class Training {
     private long id;
     @ManyToOne
     private Team team;
-    private LocalDate datum;
+    private String datum;
 
     @ManyToMany
     private List<Trainer> trainers = new ArrayList();
@@ -35,11 +35,11 @@ public class Training {
         this.team = team;
     }
 
-    public LocalDate getDatum() {
+    public String getDatum() {
         return datum;
     }
 
-    public void setDatum(LocalDate datum) {
+    public void setDatum(String datum) {
         this.datum = datum;
     }
 
