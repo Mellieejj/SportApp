@@ -1,11 +1,9 @@
 package nl.traineeship.SportApp.controller;
 
 import nl.traineeship.SportApp.domein.Speler;
-import nl.traineeship.SportApp.exceptions.SpelerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class SpelerService {
@@ -25,6 +23,14 @@ public class SpelerService {
     }
 
     public Speler zoekSpeler(String naam) {
-        return spelerRepo.findByNaam(naam);
+        return spelerRepo.findByNaam(naam).get();
+    }
+
+    public void deleteSpeler(long id){
+        Speler speler = spelerRepo.findById(id).get();
+        System.out.println("delete: " + speler);
+        spelerRepo.delete(speler);
+
+
     }
 }

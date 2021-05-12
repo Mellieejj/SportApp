@@ -34,11 +34,23 @@ public class SpelerEndPoints {
         System.out.println("zoek speler");
         return sps.vindSpeler(id);
     }
-
+//    @CrossOrigin
+//    @GetMapping("/zoekspeler/{naam}")
+//    public Speler vindSpeler(@PathVariable String naam) {
+//        System.out.println("Zoek speler met naam: " + naam);
+//        return sps.zoekSpeler(naam);
+//    }
     @CrossOrigin
-    @GetMapping("/zoekspeler/{naam}")
-    public Speler vindSpeler(@PathVariable String naam) {
+    @GetMapping("/zoekspeler")
+    public Speler vindSpeler(@RequestParam(name="speler") String naam) {
         System.out.println("Zoek speler met naam: " + naam);
         return sps.zoekSpeler(naam);
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/{id}")
+    public void deleteSpeler(@PathVariable long id){
+        System.out.println("endpoint delete");
+        sps.deleteSpeler(id);
     }
 }
