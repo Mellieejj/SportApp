@@ -47,4 +47,15 @@ public class TrainingEndpoints {
         trainingService.addTeamToTraining(trainingId, teamNaam);
     }
 
+    @CrossOrigin
+    @PutMapping("/{trainingsId}/spelers/{spelerId}")
+    public void addSpelerToTraining(@PathVariable long trainingsId, @PathVariable long spelerId){
+        trainingService.addSpelerToTraining(trainingsId, spelerId);
+    }
+
+    @CrossOrigin
+    @PutMapping("/{trainingsId}/trainers/{trainerId}")
+    public void addTrainerToTraining(@PathVariable long trainingsId, @PathVariable long trainerId){
+        trainingService.addTrainerToTraining(trainingsId, trainerId);
+    }
 }

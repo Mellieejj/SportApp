@@ -2,6 +2,7 @@ package nl.traineeship.SportApp.controller;
 
 import nl.traineeship.SportApp.domein.Speler;
 import nl.traineeship.SportApp.domein.Team;
+import nl.traineeship.SportApp.domein.Trainer;
 import nl.traineeship.SportApp.domein.Training;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,12 @@ public class TrainingService {
 
     @Autowired
     TeamRepository teamRepo;
+
+    @Autowired
+    SpelerRepository spelerRepo;
+
+    @Autowired
+    TrainerRepository trainerRepo;
 
     public Iterable<Training> alleTrainingen() {
         return trainingRepo.findAll();
@@ -44,6 +51,22 @@ public class TrainingService {
         Training training = vindTraining(trainingId);
 
         training.setTeam(team);
+        trainingRepo.save(training);
+    }
+
+    public void addSpelerToTraining(long trainingId, long spelerId){
+        Training training = vindTraining(trainingId);
+        Speler speler = spelerRepo.findById(spelerId).get();
+
+        training.addSpelerToTraining(speler);
+        trainingRepo.save(training);
+    }
+
+    public void addTrainerToTraining(long trainingsId, long trainerId){
+        Training training = vindTraining(trainingsId);
+        Trainer trainer = trainerRepo.findById(trainerId).get();
+
+        training.addTrainerToTraining(trainer);
         trainingRepo.save(training);
     }
 }

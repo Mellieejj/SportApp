@@ -48,15 +48,22 @@ public class Training {
         return trainers;
     }
 
-    public void setTrainers(Trainer trainers) {
-        this.trainers.add(trainers);
+    public void addTrainerToTraining(Trainer trainer) {
+        this.trainers.add(trainer);
+    }
+
+    public void removeTrainerFromTraining(Trainer trainer){
+        this.trainers.remove(trainer);
     }
 
     public List<Speler> getOpkomst() {
         return opkomst;
     }
 
-    public void setOpkomst(Speler opkomst) {
-        this.opkomst.add(opkomst);
+    public void addSpelerToTraining(Speler speler) {
+        this.opkomst.add(speler);
+    }
+    public void removeSpelerFromTraining(Speler speler){
+        this.opkomst.remove(speler);
     }
 }
