@@ -1,8 +1,7 @@
 package nl.traineeship.SportApp.controller;
 
-import nl.traineeship.SportApp.domein.Speler;
+import nl.traineeship.SportApp.domein.Team;
 import nl.traineeship.SportApp.domein.Trainer;
-import nl.traineeship.SportApp.exceptions.SpelerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +9,9 @@ import org.springframework.stereotype.Service;
 public class TrainerService {
     @Autowired
     TrainerRepository trainerRepo;
+
+    @Autowired
+    TeamRepository teamRepo;
 
     public Iterable<Trainer> alleTrainers() {
         return trainerRepo.findAll();
@@ -41,5 +43,16 @@ public class TrainerService {
         }
 
         trainerRepo.save(trainer);
+    }
+
+    public void addTeamToTrainer(long trainerId, String teamNaam){
+        Trainer trainer = vindTrainer(trainerId);
+        Team team = teamRepo.findByTeamNaam(teamNaam).get();
+
+        if (!trainer.getTeams().contains(team)){
+            trainer.addTeam(team);
+            trainerRepo.save(trainer);
+        }
+
     }
 }

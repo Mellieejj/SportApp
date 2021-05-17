@@ -3,8 +3,11 @@ package nl.traineeship.SportApp.endpoints;
 import nl.traineeship.SportApp.controller.TeamService;
 import nl.traineeship.SportApp.domein.Speler;
 import nl.traineeship.SportApp.domein.Team;
+import nl.traineeship.SportApp.domein.Trainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/teams")
@@ -47,5 +50,11 @@ public class TeamEndpoint {
     @PutMapping("/{teamNaam}/{spelerId}")
     public void addSpelerToTeam(@PathVariable String teamNaam, @PathVariable long spelerId) {
         teamService.addSpelerToTeam(teamNaam, spelerId);
+    }
+
+    @CrossOrigin
+    @GetMapping("/{teamNaam}/trainers")
+    public List<Trainer> teamTrainers(@PathVariable String teamNaam){
+        return teamService.vindTrainers(teamNaam);
     }
 }

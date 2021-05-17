@@ -43,11 +43,18 @@ public class TrainerEndpoints {
     public void deleteTrainer(@PathVariable long id){
         System.out.println("Delete Trainer met id: " + id);
         ts.deleteTrainer(id);
+
     }
 
     @CrossOrigin
     @PutMapping("/{id}")
     public void updateTrainer(@PathVariable long id, @RequestBody Trainer trainer){
         ts.updateTrainer(id, trainer);
+    }
+
+    @CrossOrigin
+    @PutMapping("/{trainerId}/teams/{teamNaam}")
+    public void addTeamToTrainer(@PathVariable long trainerId, @PathVariable String teamNaam ){
+        ts.addTeamToTrainer(trainerId, teamNaam);
     }
 }

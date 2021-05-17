@@ -1,5 +1,6 @@
 package nl.traineeship.SportApp.domein;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -19,7 +20,8 @@ public class Team {
    @Enumerated
     private Speeldag speeldag;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "teams")
+    @JsonBackReference
     private List<Trainer> trainers = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -54,7 +56,7 @@ public class Team {
         return trainers;
     }
 
-    public void setTrainers(Trainer trainer) {
+    public void addTrainer(Trainer trainer) {
         this.trainers.add(trainer);
     }
 

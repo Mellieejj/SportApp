@@ -2,8 +2,11 @@ package nl.traineeship.SportApp.controller;
 
 import nl.traineeship.SportApp.domein.Speler;
 import nl.traineeship.SportApp.domein.Team;
+import nl.traineeship.SportApp.domein.Trainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TeamService {
@@ -62,5 +65,10 @@ public class TeamService {
         }
         team.addSpeler(speler);
         teamRepo.save(team);
+    }
+
+    public List<Trainer> vindTrainers(String teamNaam){
+        Team team = vindTeam(teamNaam);
+        return team.getTrainers();
     }
 }
