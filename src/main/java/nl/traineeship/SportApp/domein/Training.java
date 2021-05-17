@@ -10,7 +10,8 @@ public class Training {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     private Team team;
     private String datum;
 

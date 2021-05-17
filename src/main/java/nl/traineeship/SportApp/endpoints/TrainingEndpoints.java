@@ -29,4 +29,22 @@ public class TrainingEndpoints {
         trainingService.addTraining(training);
     }
 
+    @CrossOrigin
+    @DeleteMapping("/{id}")
+    public void deleteTraining(@PathVariable long id){
+        trainingService.deleteTraining(id);
+    }
+
+    @CrossOrigin
+    @PutMapping("/{id}")
+    public void updateTraining(@PathVariable long id, @RequestBody Training tr){
+        trainingService.updateTraining(id, tr);
+    }
+
+    @CrossOrigin
+    @PutMapping("/{trainingId}/{teamNaam}")
+    public void addTeamToTraining(@PathVariable long trainingId, @PathVariable String teamNaam){
+        trainingService.addTeamToTraining(trainingId, teamNaam);
+    }
+
 }
