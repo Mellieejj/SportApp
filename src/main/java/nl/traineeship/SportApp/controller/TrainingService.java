@@ -20,4 +20,6 @@ public class TrainingService {
     public void addTraining(Training training){
         trainingRepo.save(training);
     }
+
+
 }

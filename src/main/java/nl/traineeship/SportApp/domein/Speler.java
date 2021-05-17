@@ -1,8 +1,11 @@
 package nl.traineeship.SportApp.domein;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
+@Table(name = "speler")
 public class Speler {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,6 +15,8 @@ public class Speler {
     private String positie;
 
     @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "team_id")
     private Team team;
 
     public long getId() {

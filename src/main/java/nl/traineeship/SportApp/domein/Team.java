@@ -1,21 +1,29 @@
 package nl.traineeship.SportApp.domein;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "team")
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+   @Column(unique = true)
     private String teamNaam;
-    @Enumerated
+
+   @Enumerated
     private Speeldag speeldag;
+
     @ManyToMany
     private List<Trainer> trainers = new ArrayList<>();
-    @OneToMany
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Speler> spelers = new ArrayList<>();
 
     public long getId() {
@@ -54,7 +62,8 @@ public class Team {
         return spelers;
     }
 
-    public void setSpelers(Speler speler) {
-        this.spelers.add(speler);
+    public void addSpeler(Speler speler) {
+        spelers.add(speler);
+        speler.setTeam(this);
     }
 }

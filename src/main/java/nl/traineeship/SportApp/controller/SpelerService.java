@@ -26,9 +26,22 @@ public class SpelerService {
         return spelerRepo.findByNaam(naam).get();
     }
 
-    public void deleteSpeler(long id){
+    public void deleteSpeler(long id) {
         Speler speler = spelerRepo.findById(id).get();
         System.out.println("delete: " + speler);
         spelerRepo.delete(speler);
+    }
+
+    public void updateSpeler(long id, Speler speler) {
+        System.out.println("update " + speler.getNaam());
+        Speler sp = vindSpeler(id);
+
+        if (speler.getNaam() != null && !speler.getNaam().equals("")) {
+            sp.setNaam(speler.getNaam());
+        }
+        if (speler.getPositie() != null && !speler.getPositie().equals("")) {
+            sp.setPositie(speler.getPositie());
+        }
+        spelerRepo.save(sp);
     }
 }
