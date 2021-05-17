@@ -13,7 +13,7 @@ public class TrainerEndpoints {
 
     @CrossOrigin
     @GetMapping
-    public Iterable<Trainer> alleTrainer(){
+    public Iterable<Trainer> alleTrainers(){
         return ts.alleTrainers();
     }
 
@@ -22,6 +22,13 @@ public class TrainerEndpoints {
     public void nieuweTrainer(@RequestBody Trainer trainer){
         ts.addTrainer(trainer);
         System.out.println(trainer.getNaam());
+    }
+
+    @CrossOrigin
+    @GetMapping("/zoektrainer")
+    public Trainer zoekTrainerOpNaam(@RequestParam(name= "trainer") String naam){
+        System.out.println("Vind trainer met naam: " + naam);
+        return ts.zoekTrainerByName(naam);
     }
 
     @CrossOrigin
@@ -38,9 +45,9 @@ public class TrainerEndpoints {
         ts.deleteTrainer(id);
     }
 
-//    @CrossOrigin
-//    @PatchMapping("/{id}")
-//    public Trainer updateTrainer(@PathVariable long id, @RequestBody Trainer trainer){
-//        return ts.updateTrainer(id, trainer)
-//    }
+    @CrossOrigin
+    @PutMapping("/{id}")
+    public void updateTrainer(@PathVariable long id, @RequestBody Trainer trainer){
+        ts.updateTrainer(id, trainer);
+    }
 }

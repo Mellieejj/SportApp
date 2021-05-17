@@ -1,5 +1,6 @@
 package nl.traineeship.SportApp.controller;
 
+import nl.traineeship.SportApp.domein.Speler;
 import nl.traineeship.SportApp.domein.Trainer;
 import nl.traineeship.SportApp.exceptions.SpelerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,11 @@ public class TrainerService {
     }
 
     public Trainer vindTrainer(long id){
-        return trainerRepo.findById(id).orElseThrow(() -> new SpelerNotFoundException(id));
+        return trainerRepo.findById(id).get();
+    }
+
+    public Trainer zoekTrainerByName(String naam){
+        return trainerRepo.findByNaam(naam).get();
     }
 
     public void deleteTrainer(long id){
@@ -28,6 +33,13 @@ public class TrainerService {
     }
 
     public void updateTrainer(long id, Trainer tr){
+        System.out.println("update " + tr.getNaam());
+        Trainer trainer = vindTrainer(id);
 
+        if (tr.getNaam() != null && !tr.getNaam().equals("")) {
+            trainer.setNaam(tr.getNaam());
+        }
+
+        trainerRepo.save(trainer);
     }
 }
