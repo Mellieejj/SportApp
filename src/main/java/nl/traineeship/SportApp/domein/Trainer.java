@@ -14,7 +14,7 @@ public class Trainer {
     private String naam;
 
     @ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JsonManagedReference
+//    @JsonManagedReference
     @JoinTable(
             name = "trainer_teams",
             joinColumns = @JoinColumn(name = "trainer_id", referencedColumnName = "id"),
