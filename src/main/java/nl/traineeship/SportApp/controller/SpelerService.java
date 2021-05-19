@@ -23,6 +23,8 @@ public class SpelerService {
 
     public Speler vindSpeler(long spelerId) {
         Optional<Speler> speler = spelerRepo.findById(spelerId);
+
+        System.out.println(speler.get().getTeam().getTeamNaam());
         if(speler.isEmpty()){
             throw new SpelerNotFoundException("Speler met id: " + spelerId + " niet gevonden.");
         } else {

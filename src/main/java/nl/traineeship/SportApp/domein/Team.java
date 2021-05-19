@@ -80,6 +80,13 @@ public class Team {
         }
     }
 
+    public void deleteSpeler(Speler speler){
+        System.out.println("Speler uit team verwijderen");
+        this.spelers.remove(speler);
+        this.selectie.remove(speler);
+        speler.setTeam(null);
+    }
+
     public List<Speler> getSelectie() {
         return selectie;
     }
