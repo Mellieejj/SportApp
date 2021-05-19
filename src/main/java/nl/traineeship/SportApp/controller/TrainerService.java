@@ -2,8 +2,12 @@ package nl.traineeship.SportApp.controller;
 
 import nl.traineeship.SportApp.domein.Team;
 import nl.traineeship.SportApp.domein.Trainer;
+import nl.traineeship.SportApp.exceptions.TeamNotFoundException;
+import nl.traineeship.SportApp.exceptions.TrainerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class TrainerService {
@@ -22,11 +26,21 @@ public class TrainerService {
     }
 
     public Trainer vindTrainer(long id){
-        return trainerRepo.findById(id).get();
+        Optional<Trainer> trainer = trainerRepo.findById(id);
+        if(trainer.isEmpty()){
+            throw new TrainerNotFoundException("Trainer met id: " + id + " niet gevonden!");
+        } else {
+            return trainer.get();
+        }
     }
 
     public Trainer zoekTrainerByName(String naam){
-        return trainerRepo.findByNaam(naam).get();
+        Optional<Trainer> trainer = trainerRepo.findByNaam(naam);
+        if (trainer.isEmpty()){
+            throw new TrainerNotFoundException("Trainer " + naam + " niet gevonden.");
+        } else {
+            return trainer.get();
+        }
     }
 
     public void deleteTrainer(long id){
@@ -35,22 +49,23 @@ public class TrainerService {
     }
 
     public void updateTrainer(long id, Trainer tr){
-        System.out.println("update " + tr.getNaam());
         Trainer trainer = vindTrainer(id);
-
         if (tr.getNaam() != null && !tr.getNaam().equals("")) {
             trainer.setNaam(tr.getNaam());
         }
-
         trainerRepo.save(trainer);
     }
 
     public void addTeamToTrainer(long trainerId, String teamNaam){
         Trainer trainer = vindTrainer(trainerId);
-        Team team = teamRepo.findByTeamNaam(teamNaam).get();
+        Optional<Team> team = teamRepo.findByTeamNaam(teamNaam);
 
-        if (!trainer.getTeams().contains(team)){
-            trainer.addTeam(team);
+        if(team.isEmpty()){
+            throw new TeamNotFoundException("Team " + teamNaam + " niet gevonden.");
+        }
+
+        if (!trainer.getTeams().contains(team.get())){
+            trainer.addTeam(team.get());
             trainerRepo.save(trainer);
         }
 
