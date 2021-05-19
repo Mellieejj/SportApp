@@ -23,19 +23,16 @@ public class SpelerService {
 
     public Speler vindSpeler(long spelerId) {
         Optional<Speler> speler = spelerRepo.findById(spelerId);
-
-        System.out.println(speler.get().getTeam().getTeamNaam());
-        if(speler.isEmpty()){
+        if (speler.isEmpty()) {
             throw new SpelerNotFoundException("Speler met id: " + spelerId + " niet gevonden.");
         } else {
             return speler.get();
         }
-
     }
 
     public Speler zoekSpeler(String naam) {
         Optional<Speler> speler = spelerRepo.findByNaam(naam);
-        if(speler.isEmpty()){
+        if (speler.isEmpty()) {
             throw new SpelerNotFoundException("Speler " + naam + " niet gevonden.");
         } else {
             return speler.get();

@@ -17,6 +17,15 @@ public class TrainerService {
     @Autowired
     TeamRepository teamRepo;
 
+    public Team vindTeam(String teamNaam){
+        Optional<Team> team = teamRepo.findByTeamNaam(teamNaam);
+
+        if(team.isEmpty()){
+            throw new TeamNotFoundException("Team " + teamNaam + " niet gevonden.");
+        } else {
+            return team.get();
+        }
+    }
     public Iterable<Trainer> alleTrainers() {
         return trainerRepo.findAll();
     }
@@ -58,16 +67,19 @@ public class TrainerService {
 
     public void addTeamToTrainer(long trainerId, String teamNaam){
         Trainer trainer = vindTrainer(trainerId);
-        Optional<Team> team = teamRepo.findByTeamNaam(teamNaam);
+        Team team = vindTeam(teamNaam);
 
-        if(team.isEmpty()){
-            throw new TeamNotFoundException("Team " + teamNaam + " niet gevonden.");
-        }
-
-        if (!trainer.getTeams().contains(team.get())){
-            trainer.addTeam(team.get());
+        if (!trainer.getTeams().contains(team)){
+            trainer.addTeam(team);
             trainerRepo.save(trainer);
         }
+    }
 
+    public void deleteTeamFromTrainer(long trainerId, String teamNaam){
+        Trainer trainer = vindTrainer(trainerId);
+        Team team = vindTeam(teamNaam);
+
+        trainer.removeTeam(team);
+        trainerRepo.save(trainer);
     }
 }

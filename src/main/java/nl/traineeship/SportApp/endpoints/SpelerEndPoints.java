@@ -25,8 +25,8 @@ public class SpelerEndPoints {
     @CrossOrigin
     @PostMapping
     public void nieuweSpeler(@RequestBody Speler speler) {
-            sps.addSpeler(speler);
-            System.out.println(speler.getNaam());
+        sps.addSpeler(speler);
+        System.out.println(speler.getNaam());
     }
 
     @CrossOrigin
@@ -35,8 +35,8 @@ public class SpelerEndPoints {
         try {
             System.out.println("zoek speler: " + id);
             return sps.vindSpeler(id);
-        } catch(SpelerNotFoundException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(),e);
+        } catch (SpelerNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
 
         }
     }
@@ -47,7 +47,7 @@ public class SpelerEndPoints {
         try {
             System.out.println("Zoek speler met naam: " + naam);
             return sps.zoekSpeler(naam);
-        } catch (SpelerNotFoundException e){
+        } catch (SpelerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
@@ -58,7 +58,7 @@ public class SpelerEndPoints {
         try {
             System.out.println("Delete Speler met id: " + id);
             sps.deleteSpeler(id);
-        } catch (SpelerNotFoundException e){
+        } catch (SpelerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
@@ -69,7 +69,7 @@ public class SpelerEndPoints {
         try {
             System.out.println("update speler met id: " + id);
             sps.updateSpeler(id, speler);
-        } catch (SpelerNotFoundException e){
+        } catch (SpelerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }

@@ -20,14 +20,15 @@ public class TeamService {
     @Autowired
     SpelerRepository spelerRepo;
 
-    private Speler vindSpeler(long spelerId){
+    private Speler vindSpeler(long spelerId) {
         Optional<Speler> sp = spelerRepo.findById(spelerId);
-        if(sp.isEmpty()){
+        if (sp.isEmpty()) {
             throw new SpelerNotFoundException("Speler niet gevonden");
         } else {
             return sp.get();
         }
     }
+
     public Iterable<Team> alleTeams() {
         return teamRepo.findAll();
     }

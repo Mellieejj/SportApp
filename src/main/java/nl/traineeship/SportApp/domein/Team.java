@@ -66,6 +66,10 @@ public class Team {
         this.trainers.add(trainer);
     }
 
+    public void removeTrainer(Trainer trainer){
+        this.trainers.remove(trainer);
+    }
+
     public List<Speler> getSpelers() {
         return spelers;
     }

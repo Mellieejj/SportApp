@@ -51,6 +51,7 @@ public class Trainer {
 
     public void removeTeam(Team team) {
         this.teams.remove(team);
+        team.removeTrainer(this);
     }
 }
 

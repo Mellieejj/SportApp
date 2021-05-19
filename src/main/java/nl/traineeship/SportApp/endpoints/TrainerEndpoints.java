@@ -2,6 +2,7 @@ package nl.traineeship.SportApp.endpoints;
 
 import nl.traineeship.SportApp.controller.TrainerService;
 import nl.traineeship.SportApp.domein.Trainer;
+import nl.traineeship.SportApp.exceptions.TeamNotFoundException;
 import nl.traineeship.SportApp.exceptions.TrainerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -76,7 +77,17 @@ public class TrainerEndpoints {
     public void addTeamToTrainer(@PathVariable long trainerId, @PathVariable String teamNaam) {
         try {
             ts.addTeamToTrainer(trainerId, teamNaam);
-        } catch (TrainerNotFoundException e) {
+        } catch (TrainerNotFoundException | TeamNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
+    @CrossOrigin
+    @DeleteMapping("{trainerId}/teams/{teamNaam}")
+    public void deleteTeamFromTrainer(@PathVariable long trainerId, @PathVariable String teamNaam){
+        try {
+            ts.deleteTeamFromTrainer(trainerId, teamNaam);
+        } catch(TrainerNotFoundException | TeamNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
