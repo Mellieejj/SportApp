@@ -27,7 +27,7 @@ public class Team {
     @JsonBackReference
     private List<Trainer> trainers = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
 //    @JsonManagedReference
     private List<Speler> spelers = new ArrayList<>();
 
@@ -71,6 +71,7 @@ public class Team {
     }
 
     public void addSpeler(Speler speler) {
+        System.out.println("speler toevoegen");
         if(!this.getSpelers().contains(speler)){
             spelers.add(speler);
             speler.setTeam(this);

@@ -77,6 +77,16 @@ public class TeamEndpoint {
     }
 
     @CrossOrigin
+    @DeleteMapping("/{teamNaam}/{spelerId}")
+    public void deleteSpeler(@PathVariable String teamNaam, @PathVariable long spelerId){
+        try {
+            teamService.deleteSpeler(teamNaam, spelerId);
+        } catch (TeamNotFoundException | SpelerNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
+    @CrossOrigin
     @GetMapping("/{teamNaam}/trainers")
     public List<Trainer> teamTrainers(@PathVariable String teamNaam) {
         try {

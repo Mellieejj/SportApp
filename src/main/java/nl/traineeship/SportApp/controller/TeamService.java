@@ -64,7 +64,7 @@ public class TeamService {
         }
         teamRepo.save(t);
     }
-
+//functie loopt nog niet lekker...
     public void addSpelerToTeam(String teamNaam, long spelerId) {
         Speler speler = spelerRepo.findById(spelerId).get();
         Team team = vindTeam(teamNaam);
@@ -80,6 +80,12 @@ public class TeamService {
         teamRepo.save(team);
     }
 
+    public void deleteSpeler(String teamNaam, long spelerId){
+        Team team = vindTeam(teamNaam);
+        Speler speler = spelerRepo.findById(spelerId).get();
+        team.getSpelers().remove(speler);
+        teamRepo.save(team);
+    }
     public List<Trainer> vindTrainers(String teamNaam){
         Team team = vindTeam(teamNaam);
         return team.getTrainers();

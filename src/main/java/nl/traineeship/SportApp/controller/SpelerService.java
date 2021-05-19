@@ -1,8 +1,11 @@
 package nl.traineeship.SportApp.controller;
 
 import nl.traineeship.SportApp.domein.Speler;
+import nl.traineeship.SportApp.exceptions.SpelerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
@@ -19,23 +22,31 @@ public class SpelerService {
     }
 
     public Speler vindSpeler(long spelerId) {
-        return spelerRepo.findById(spelerId).get();
+        Optional<Speler> speler = spelerRepo.findById(spelerId);
+        if(speler.isEmpty()){
+            throw new SpelerNotFoundException("Speler met id: " + spelerId + " niet gevonden.");
+        } else {
+            return speler.get();
+        }
+
     }
 
     public Speler zoekSpeler(String naam) {
-        return spelerRepo.findByNaam(naam).get();
+        Optional<Speler> speler = spelerRepo.findByNaam(naam);
+        if(speler.isEmpty()){
+            throw new SpelerNotFoundException("Speler " + naam + " niet gevonden.")
+        } else {
+            return speler.get();
+        }
     }
 
     public void deleteSpeler(long id) {
-        Speler speler = spelerRepo.findById(id).get();
-        System.out.println("delete: " + speler);
+        Speler speler = vindSpeler(id);
         spelerRepo.delete(speler);
     }
 
     public void updateSpeler(long id, Speler speler) {
-        System.out.println("update " + speler.getNaam());
         Speler sp = vindSpeler(id);
-
         if (speler.getNaam() != null && !speler.getNaam().equals("")) {
             sp.setNaam(speler.getNaam());
         }
