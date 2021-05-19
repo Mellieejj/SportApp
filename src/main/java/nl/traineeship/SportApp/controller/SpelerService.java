@@ -34,7 +34,7 @@ public class SpelerService {
     public Speler zoekSpeler(String naam) {
         Optional<Speler> speler = spelerRepo.findByNaam(naam);
         if(speler.isEmpty()){
-            throw new SpelerNotFoundException("Speler " + naam + " niet gevonden.")
+            throw new SpelerNotFoundException("Speler " + naam + " niet gevonden.");
         } else {
             return speler.get();
         }
