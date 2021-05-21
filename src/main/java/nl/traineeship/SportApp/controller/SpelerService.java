@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-
 @Service
 public class SpelerService {
     @Autowired
@@ -53,5 +52,9 @@ public class SpelerService {
             sp.setPositie(speler.getPositie());
         }
         spelerRepo.save(sp);
+    }
+
+    public Iterable<Speler> zoekOpPositie(String positie){
+        return spelerRepo.findByPositieC(positie);
     }
 }

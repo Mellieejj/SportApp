@@ -54,4 +54,3 @@ public class Trainer {
         team.removeTrainer(this);
     }
 }
-

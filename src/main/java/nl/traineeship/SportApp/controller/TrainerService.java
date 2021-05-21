@@ -26,6 +26,7 @@ public class TrainerService {
             return team.get();
         }
     }
+
     public Iterable<Trainer> alleTrainers() {
         return trainerRepo.findAll();
     }

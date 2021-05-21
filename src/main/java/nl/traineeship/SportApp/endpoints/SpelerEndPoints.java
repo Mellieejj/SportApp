@@ -73,4 +73,10 @@ public class SpelerEndPoints {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
+
+    @CrossOrigin
+    @GetMapping("/posities/{positie}")
+    public Iterable<Speler> zoekOpPositie(@PathVariable String positie){
+       return sps.zoekOpPositie(positie);
+    }
 }

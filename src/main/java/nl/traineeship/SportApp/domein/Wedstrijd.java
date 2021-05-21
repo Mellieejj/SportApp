@@ -1,8 +1,11 @@
 package nl.traineeship.SportApp.domein;
 
+import nl.traineeship.SportApp.exceptions.TeamNotFoundException;
 import org.hibernate.annotations.IndexColumn;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Wedstrijd {
@@ -10,9 +13,10 @@ public class Wedstrijd {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    String datum;
     @ManyToMany
-    @IndexColumn(name="wedstrijden")
-    private final Team[] teams = new Team[2];
+    @IndexColumn(name = "wedstrijden")
+    private List<Team> teams = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -22,12 +26,29 @@ public class Wedstrijd {
         this.id = id;
     }
 
-    public Team[] getTeams() {
+    public String getDatum() {
+        return datum;
+    }
+
+    public void setDatum(String datum) {
+        this.datum = datum;
+    }
+
+    public List<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams( Team thuisSpelend, Team uitSpelend) {
-        this.teams[0] = thuisSpelend;
-        this.teams[1] = uitSpelend;
+    public void setTeams(Team thuisSpelend, Team uitSpelend) {
+        if (thuisSpelend == null || uitSpelend == null){
+            throw new TeamNotFoundException("Team kan niet null zijn.");
+        }
+
+        if(this.teams.size() == 0){
+            this.teams.add(0, thuisSpelend);
+            this.teams.add(1, uitSpelend);
+        } else {
+            this.teams.set(0, thuisSpelend);
+            this.teams.set(1, uitSpelend);
+        }
     }
 }
