@@ -2,6 +2,7 @@ package nl.traineeship.SportApp.controller;
 
 import nl.traineeship.SportApp.domein.Team;
 import nl.traineeship.SportApp.domein.Wedstrijd;
+import nl.traineeship.SportApp.exceptions.NoDateException;
 import nl.traineeship.SportApp.exceptions.TeamNotFoundException;
 import nl.traineeship.SportApp.exceptions.WedstrijdNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,11 @@ public class WedstrijdService {
     }
 
     public void addWedstrijd(Wedstrijd wd) {
-        wedstrijdRepo.save(wd);
+        if (wd.getDatum() != null){
+            wedstrijdRepo.save(wd);
+        } else {
+            throw new NoDateException("Datum is verplicht.");
+        }
     }
 
     public void updateWedstrijd(long id, Wedstrijd wd) {
@@ -65,17 +70,14 @@ public class WedstrijdService {
         wedstrijdRepo.save(wedstrijd);
     }
 
-    public Iterable<Wedstrijd> vindAlleTeamwedstrijden(String teamNaam) {
-//        Team team = vindTeam(teamNaam);
-//        Iterable<Wedstrijd> lijst = wedstrijdRepo.findAll();
-//        List<Wedstrijd> w = new ArrayList<>();
-//
-//        for(Wedstrijd item : lijst){
-//            if(item.getTeams().contains(team)){
-//                w.add(item);
-//            }
-//        }
-//        return w;
+    public Iterable<Wedstrijd> vindAlleTeamWedstrijden(String teamNaam) {
+        vindTeam(teamNaam);
         return wedstrijdRepo.findAllPerTeam(teamNaam);
+    }
+
+    public void deleteWedstrijd(long id){
+        Wedstrijd w = vindWedstrijd(id);
+
+        wedstrijdRepo.delete(w);
     }
 }

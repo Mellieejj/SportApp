@@ -24,16 +24,15 @@ public class TrainerEndpoints {
 
     @CrossOrigin
     @PostMapping
-    public void nieuweTrainer(@RequestBody Trainer trainer) {
+    public ResponseEntity<String> nieuweTrainer(@RequestBody Trainer trainer) {
         ts.addTrainer(trainer);
-        System.out.println(trainer.getNaam());
+        return ResponseEntity.status(HttpStatus.OK).body(trainer.getNaam() + " toegevoegd.");
     }
 
     @CrossOrigin
     @GetMapping("/zoektrainer")
     public Trainer zoekTrainerOpNaam(@RequestParam(name = "trainer") String naam) {
         try {
-            System.out.println("Vind trainer met naam: " + naam);
             return ts.zoekTrainerByName(naam);
         } catch (TrainerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage(), e);
@@ -44,7 +43,6 @@ public class TrainerEndpoints {
     @GetMapping("/{id}")
     public Trainer vindTrainer(@PathVariable long id) {
         try {
-            System.out.println("Vind Trainer met id: " + id);
             return ts.vindTrainer(id);
         } catch (TrainerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
@@ -84,10 +82,10 @@ public class TrainerEndpoints {
 
     @CrossOrigin
     @DeleteMapping("{trainerId}/teams/{teamNaam}")
-    public void deleteTeamFromTrainer(@PathVariable long trainerId, @PathVariable String teamNaam){
+    public void deleteTeamFromTrainer(@PathVariable long trainerId, @PathVariable String teamNaam) {
         try {
             ts.deleteTeamFromTrainer(trainerId, teamNaam);
-        } catch(TrainerNotFoundException | TeamNotFoundException e){
+        } catch (TrainerNotFoundException | TeamNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }

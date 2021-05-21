@@ -34,9 +34,9 @@ public class WedstrijdEndpoints {
 
     @CrossOrigin
     @PostMapping
-    public ResponseEntity nieuweWedstrijd(@RequestBody Wedstrijd wd) {
+    public ResponseEntity<String> nieuweWedstrijd(@RequestBody Wedstrijd wd) {
         wedstrijdService.addWedstrijd(wd);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Wedstrijd aangemaakt");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Wedstrijd op " + wd.getDatum() + " aangemaakt.");
     }
 
     @CrossOrigin
@@ -61,8 +61,21 @@ public class WedstrijdEndpoints {
 
     @CrossOrigin
     @GetMapping("/perteam/{teamNaam}")
-    public Iterable<Wedstrijd> wedstrijdenPerTeam(@PathVariable String teamNaam){
-       return wedstrijdService.vindAlleTeamwedstrijden(teamNaam);
+    public Iterable<Wedstrijd> wedstrijdenPerTeam(@PathVariable String teamNaam) {
+        try {
+            return wedstrijdService.vindAlleTeamWedstrijden(teamNaam);
+        } catch (TeamNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
 
+    @CrossOrigin
+    @DeleteMapping("/{id}")
+    public void deleteWedstrijd(@PathVariable long id){
+        try{
+            wedstrijdService.deleteWedstrijd(id);
+        } catch (WedstrijdNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 }

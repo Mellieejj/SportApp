@@ -24,20 +24,18 @@ public class SpelerEndPoints {
 
     @CrossOrigin
     @PostMapping
-    public void nieuweSpeler(@RequestBody Speler speler) {
+    public ResponseEntity<String> nieuweSpeler(@RequestBody Speler speler) {
         sps.addSpeler(speler);
-        System.out.println(speler.getNaam());
+        return ResponseEntity.status(HttpStatus.CREATED).body(speler.getNaam() + " toegevoegd.");
     }
 
     @CrossOrigin
     @GetMapping("/{id}")
     public Speler eenSpeler(@PathVariable long id) {
         try {
-            System.out.println("zoek speler: " + id);
             return sps.vindSpeler(id);
         } catch (SpelerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
-
         }
     }
 
@@ -45,7 +43,6 @@ public class SpelerEndPoints {
     @GetMapping("/zoekspeler")
     public Speler vindSpeler(@RequestParam(name = "speler") String naam) {
         try {
-            System.out.println("Zoek speler met naam: " + naam);
             return sps.zoekSpeler(naam);
         } catch (SpelerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
@@ -56,7 +53,6 @@ public class SpelerEndPoints {
     @DeleteMapping("/{id}")
     public void deleteSpeler(@PathVariable long id) {
         try {
-            System.out.println("Delete Speler met id: " + id);
             sps.deleteSpeler(id);
         } catch (SpelerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
@@ -67,7 +63,6 @@ public class SpelerEndPoints {
     @PutMapping("/{id}")
     public void updateSpeler(@PathVariable long id, @RequestBody Speler speler) {
         try {
-            System.out.println("update speler met id: " + id);
             sps.updateSpeler(id, speler);
         } catch (SpelerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
@@ -76,7 +71,7 @@ public class SpelerEndPoints {
 
     @CrossOrigin
     @GetMapping("/posities/{positie}")
-    public Iterable<Speler> zoekOpPositie(@PathVariable String positie){
-       return sps.zoekOpPositie(positie);
+    public ResponseEntity<Iterable<Speler>> zoekOpPositie(@PathVariable String positie){
+       return ResponseEntity.status(HttpStatus.OK).body(sps.zoekOpPositie(positie));
     }
 }
